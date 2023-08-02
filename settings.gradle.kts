@@ -16,7 +16,9 @@ dependencyResolutionManagement {
 rootProject.name = "RealTime Weather App"
 include(":app")
 include(":library")
+include(":feature")
 include(":library:network")
 include(":library:network-contract")
 include(":core")
 include(":ui_component")
+include(":feature:map")
