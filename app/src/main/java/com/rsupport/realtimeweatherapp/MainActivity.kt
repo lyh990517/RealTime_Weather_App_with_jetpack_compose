@@ -1,7 +1,6 @@
 package com.rsupport.realtimeweatherapp
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -14,12 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import com.rsupport.map.presentation.viewmodel.WeatherViewModel
-import com.rsupport.network_contract.response.ApiResponse
-import com.rsupport.network_contract.IWeatherDataRequester
 import com.rsupport.realtimeweatherapp.ui.theme.RealTimeWeatherAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -28,9 +27,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        lifecycleScope.launch {
-            viewModel.fetchWeather(1, 10, "JSON", "20230802", "0600", 55, 127)
-        }
+        fetchMap()
         setContent {
             RealTimeWeatherAppTheme {
                 // A surface container using the 'background' color from the theme
@@ -38,9 +35,19 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    WeatherNavHost(weatherViewModel = viewModel)
                 }
             }
+        }
+    }
+
+    private fun fetchMap() {
+        val currentDate = LocalDate.now()
+        val oneHourAgo = LocalTime.now().minusHours(1)
+        val formattedTime = oneHourAgo.format(DateTimeFormatter.ofPattern("HHmm"))
+        val formattedDate = currentDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"))
+        lifecycleScope.launch {
+            viewModel.fetchWeather(1, 10, "JSON", formattedDate, formattedTime, 55, 127)
         }
     }
 }

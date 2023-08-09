@@ -6,7 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.rsupport.core.model.ModelWrapper
 import com.rsupport.core.model.WeatherUiModel
 import com.rsupport.core.repository.IWeatherRepository
+import com.rsupport.map.presentation.state.MapState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -14,6 +16,8 @@ import javax.inject.Inject
 class WeatherViewModel @Inject constructor(private val iWeatherRepository: IWeatherRepository) :
     ViewModel() {
 
+    private val _uiState = MutableStateFlow<MapState>(MapState.Loading)
+    val uiState = _uiState
     fun fetchWeather(
         pageNo: Int,
         numOfRows: Int,
@@ -27,13 +31,12 @@ class WeatherViewModel @Inject constructor(private val iWeatherRepository: IWeat
             iWeatherRepository.getWeather(pageNo, numOfRows, dataType, baseDate, baseTime, nx, ny)
         when (result) {
             is ModelWrapper.Success -> {
-                val a = result.model as WeatherUiModel
-                Log.e("data", "$a")
+                val weatherUiModel = result.model as WeatherUiModel
+                _uiState.value = MapState.Success(weatherUiModel)
             }
 
             is ModelWrapper.Fail -> {
-                result.error
-                Log.e("data", "${result.error}")
+                _uiState.value = MapState.Fail(result.error)
             }
         }
     }
