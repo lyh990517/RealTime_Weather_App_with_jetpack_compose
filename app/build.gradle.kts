@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.rsupport.realtimeweatherapp"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.rsupport.realtimeweatherapp"

@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.rsupport.map"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 24
@@ -64,6 +64,10 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.45")
 
     implementation("androidx.navigation:navigation-compose:2.6.0")
+
+    implementation("com.naver.maps:map-sdk:3.17.0")
+    implementation ("io.github.fornewid:naver-map-compose:1.5.0")
+
 
 }
 
