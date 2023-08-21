@@ -57,6 +57,7 @@ dependencies {
     implementation(project(":library:network-contract"))
     implementation(project(":library:network"))
     implementation(project(":feature:map"))
+    implementation(project(":MapUtil"))
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
     implementation("androidx.activity:activity-compose:1.7.2")

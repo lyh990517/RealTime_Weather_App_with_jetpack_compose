@@ -26,14 +26,16 @@ class WeatherViewModel @Inject constructor(private val getWeatherDataUseCase: Ge
         baseDate: String,
         baseTime: String,
         nx: Int,
-        ny: Int
+        ny: Int,
+        lat: Double,
+        lng: Double
     ) = viewModelScope.launch {
         _uiState.value = MapState.Loading
         when (val result =
             getWeatherDataUseCase(pageNo, numOfRows, dataType, baseDate, baseTime, nx, ny)) {
             is ModelWrapper.Success -> {
                 val weatherUiModel = result.model as WeatherUiModel
-                _uiState.value = MapState.Success(weatherUiModel)
+                _uiState.value = MapState.Success(weatherUiModel, lat, lng)
             }
 
             is ModelWrapper.Fail -> {
