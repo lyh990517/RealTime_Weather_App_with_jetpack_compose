@@ -1,7 +1,5 @@
 package com.rsupport.map.presentation.view
 
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
@@ -12,7 +10,6 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.content.ContextCompat
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraPosition
 import com.naver.maps.map.CameraUpdate
@@ -24,10 +21,8 @@ import com.naver.maps.map.compose.MarkerState
 import com.naver.maps.map.compose.NaverMap
 import com.naver.maps.map.compose.rememberCameraPositionState
 import com.naver.maps.map.overlay.OverlayImage
-import com.rsupport.ui_component.R
+import com.rsupport.core.mapper.ResourceMapper
 import com.rsupport.map.presentation.state.MapState
-import com.rsupport.weather_util.WeatherType
-import com.rsupport.weather_util.getWeatherType
 
 @Composable
 fun MapScreen(state: State<MapState>) {
@@ -61,7 +56,10 @@ fun MapContent(weatherData: MapState.Success) {
     val cameraPositionState: CameraPositionState = rememberCameraPositionState {
         position = CameraPosition(currentPosition, 11.0)
     }
-    val weatherResource = getWeatherResource(weatherData)
+    val weatherResource = ResourceMapper.getWeatherResource(
+        weatherData.data.weathers[0].obsrValue,
+        LocalContext.current
+    )
     LaunchedEffect(Unit) {
         cameraPositionState.move(CameraUpdate.zoomIn())
     }
@@ -82,20 +80,3 @@ fun MapContent(weatherData: MapState.Success) {
     }
 }
 
-@Composable
-private fun getWeatherResource(weatherData: MapState.Success): Bitmap {
-    val drawableResId = when (getWeatherType(weatherData.data.weathers[0].obsrValue)) {
-        WeatherType.SUN -> R.drawable.sun
-        WeatherType.RAIN -> R.drawable.rain
-        WeatherType.SLEET -> R.drawable.rain
-        WeatherType.SNOW -> R.drawable.snow
-        WeatherType.SHOWERS -> R.drawable.storm
-        WeatherType.DRIZZLE -> R.drawable.rain
-        WeatherType.FREEZING_RAIN -> R.drawable.snow
-        WeatherType.SNOWFALL -> R.drawable.snow
-    }
-
-    val drawable = ContextCompat.getDrawable(LocalContext.current, drawableResId)
-    val originalBitmap = (drawable as BitmapDrawable).bitmap
-    return Bitmap.createScaledBitmap(originalBitmap, 100, 100, false)
-}

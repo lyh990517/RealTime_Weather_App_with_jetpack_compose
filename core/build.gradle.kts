@@ -37,6 +37,7 @@ android {
 
 dependencies {
     api(project(":ui_component"))
+    implementation(project(":weather-util"))
     implementation(project(":library:network-contract"))
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
