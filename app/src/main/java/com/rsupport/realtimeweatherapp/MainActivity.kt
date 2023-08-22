@@ -98,7 +98,7 @@ class MainActivity : ComponentActivity() {
             Log.e("xy", "$xy")
             viewModel.fetchWeather(
                 1,
-                10,
+                0,
                 "JSON",
                 formattedDate,
                 formattedTime,

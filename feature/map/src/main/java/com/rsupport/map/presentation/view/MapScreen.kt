@@ -57,7 +57,7 @@ fun MapContent(weatherData: MapState.Success) {
         position = CameraPosition(currentPosition, 11.0)
     }
     val weatherResource = ResourceMapper.getWeatherResource(
-        weatherData.data.weathers[0].obsrValue,
+        weatherData.data.weatherType,
         LocalContext.current
     )
     LaunchedEffect(Unit) {
