@@ -20,6 +20,7 @@
             <option value="$PROJECT_DIR$/library/network" />
             <option value="$PROJECT_DIR$/library/network-contract" />
             <option value="$PROJECT_DIR$/ui_component" />
+            <option value="$PROJECT_DIR$/weather-util" />
           </set>
         </option>
       </GradleProjectSettings>
