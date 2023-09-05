@@ -90,13 +90,13 @@ class MainActivity : ComponentActivity() {
 
     private fun fetchMap(lat: Double, lng: Double) {
         val currentDate = LocalDate.now()
-        val oneHourAgo = LocalTime.now().minusHours(1)
+        val oneHourAgo = LocalTime.now().minusMinutes(1)
         val formattedTime = oneHourAgo.format(DateTimeFormatter.ofPattern("HHmm"))
         val formattedDate = currentDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"))
         val xy = convertGRID_GPS(0, lat, lng)
         lifecycleScope.launch {
-            Log.e("xy", "$xy")
             viewModel.fetchWeather(
+                this@MainActivity,
                 1,
                 0,
                 "JSON",
