@@ -1,8 +1,10 @@
 package com.rsupport.map.presentation.viewmodel
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rsupport.core.mapper.ResourceMapper
 import com.rsupport.core.model.ModelWrapper
 import com.rsupport.core.model.WeatherUiModel
 import com.rsupport.core.repository.IWeatherRepository
@@ -20,6 +22,7 @@ class WeatherViewModel @Inject constructor(private val getWeatherDataUseCase: Ge
     private val _uiState = MutableStateFlow<MapState>(MapState.Loading)
     val uiState = _uiState
     fun fetchWeather(
+        context: Context,
         pageNo: Int,
         numOfRows: Int,
         dataType: String,
@@ -35,7 +38,12 @@ class WeatherViewModel @Inject constructor(private val getWeatherDataUseCase: Ge
             getWeatherDataUseCase(pageNo, numOfRows, dataType, baseDate, baseTime, nx, ny)) {
             is ModelWrapper.Success -> {
                 val weatherUiModel = result.model as WeatherUiModel
-                _uiState.value = MapState.Success(weatherUiModel, lat, lng)
+                _uiState.value = MapState.Success(
+                    weatherUiModel,
+                    ResourceMapper.toWeatherResource(weatherUiModel.weatherType, context),
+                    lat,
+                    lng
+                )
             }
 
             is ModelWrapper.Fail -> {
