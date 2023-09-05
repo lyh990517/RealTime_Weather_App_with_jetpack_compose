@@ -9,7 +9,7 @@ import com.rsupport.weather_util.WeatherType
 import com.rsupport.weather_util.getWeatherType
 
 object ResourceMapper {
-    fun getWeatherResource(weatherType: String,context: Context): Bitmap {
+    fun toWeatherResource(weatherType: String, context: Context): Bitmap {
         val drawableResId = when (getWeatherType(weatherType)) {
             WeatherType.SUN -> R.drawable.sun
             WeatherType.RAIN -> R.drawable.rain
