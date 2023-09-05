@@ -11,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraPosition
 import com.naver.maps.map.CameraUpdate
@@ -22,16 +23,17 @@ import com.naver.maps.map.compose.MarkerState
 import com.naver.maps.map.compose.NaverMap
 import com.naver.maps.map.compose.rememberCameraPositionState
 import com.naver.maps.map.overlay.OverlayImage
+import com.rsupport.map.presentation.Route
 import com.rsupport.map.presentation.state.MapState
 
 @Composable
-fun MapScreen(state: State<MapState>) {
+fun MapScreen(state: State<MapState>,navHostController: NavHostController) {
     val weatherMarkerState = remember { mutableStateOf<MapState.Success?>(null) }
     when (state.value) {
         is MapState.Loading -> LoadingContent()
         is MapState.Success -> {
             weatherMarkerState.value = state.value as MapState.Success
-            MapContent(weatherMarkerState)
+            MapContent(weatherMarkerState,navHostController)
         }
         is MapState.Fail -> LoadingFail()
     }
@@ -55,7 +57,7 @@ fun LoadingFail() {
 
 @OptIn(ExperimentalNaverMapApi::class)
 @Composable
-fun MapContent(weatherMarkerState: State<MapState.Success?>) {
+fun MapContent(weatherMarkerState: State<MapState.Success?>,navHostController: NavHostController) {
     val currentPosition = LatLng(weatherMarkerState.value?.lat ?: 0.0, weatherMarkerState.value?.lng ?: 0.0)
     val cameraPositionState: CameraPositionState = rememberCameraPositionState {
         position = CameraPosition(currentPosition, 16.0)
@@ -72,7 +74,10 @@ fun MapContent(weatherMarkerState: State<MapState.Success?>) {
                 state = MarkerState(position = currentPosition),
                 captionText = "현재 위치",
                 icon = OverlayImage.fromBitmap(weatherMarkerState.value?.weatherImage!!)
-            )
+            ){
+                navHostController.navigate(Route.DETAIL)
+                true
+            }
         }
     }
 }
