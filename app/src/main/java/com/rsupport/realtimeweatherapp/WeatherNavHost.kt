@@ -23,7 +23,7 @@ fun WeatherNavHost(
             MapScreen(weatherViewModel.uiState.collectAsState(),navHostController)
         }
         composable(Route.DETAIL){
-            DetailScreen()
+            DetailScreen(navHostController = navHostController)
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.rsupport.map.presentation.view
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
@@ -37,6 +38,9 @@ fun MapScreen(state: State<MapState>,navHostController: NavHostController) {
         }
         is MapState.Fail -> LoadingFail()
     }
+    BackHandler {
+        navHostController.popBackStack()
+    }
 }
 
 @Composable
@@ -67,7 +71,7 @@ fun MapContent(weatherMarkerState: State<MapState.Success?>,navHostController: N
     }
     Box(Modifier.fillMaxSize()) {
         NaverMap(
-            properties = MapProperties(maxZoom = 16.0, minZoom = 12.0),
+            properties = MapProperties(maxZoom = 15.0, minZoom = 12.0),
             cameraPositionState = cameraPositionState,
         ) {
             Marker(
