@@ -70,7 +70,10 @@ class MainActivity : ComponentActivity() {
                             ),
                             navController = navController,
                             onItemClick = {
-                                navController.navigate(it.route) { popUpTo(Route.HOME) }
+                                navController.navigate(it.route) {
+                                    popUpTo(it.route)
+                                    launchSingleTop = true
+                                }
                             })
                     }) {
                         WeatherNavHost(

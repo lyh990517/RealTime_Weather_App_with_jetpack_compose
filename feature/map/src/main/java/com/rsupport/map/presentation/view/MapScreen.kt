@@ -24,6 +24,7 @@ import com.naver.maps.map.compose.MarkerState
 import com.naver.maps.map.compose.NaverMap
 import com.naver.maps.map.compose.rememberCameraPositionState
 import com.naver.maps.map.overlay.OverlayImage
+import com.rsupport.core.local.WeatherUiModelSingleton
 import com.rsupport.map.presentation.Route
 import com.rsupport.map.presentation.state.MapState
 
@@ -33,7 +34,9 @@ fun MapScreen(state: State<MapState>,navHostController: NavHostController) {
     when (state.value) {
         is MapState.Loading -> LoadingContent()
         is MapState.Success -> {
-            weatherMarkerState.value = state.value as MapState.Success
+            val data = state.value as MapState.Success
+            WeatherUiModelSingleton.setWeatherUiModel(data.data)
+            weatherMarkerState.value = data
             MapContent(weatherMarkerState,navHostController)
         }
         is MapState.Fail -> LoadingFail()
@@ -76,7 +79,7 @@ fun MapContent(weatherMarkerState: State<MapState.Success?>,navHostController: N
         ) {
             Marker(
                 state = MarkerState(position = currentPosition),
-                captionText = "현재 위치",
+                captionText = "현재 위치 \n ${weatherMarkerState.value?.data?.temperature}도",
                 icon = OverlayImage.fromBitmap(weatherMarkerState.value?.weatherImage!!)
             ){
                 navHostController.navigate(Route.DETAIL)
