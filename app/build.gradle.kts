@@ -13,7 +13,7 @@ android {
     defaultConfig {
         applicationId = "com.rsupport.realtimeweatherapp"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -58,6 +58,7 @@ dependencies {
     implementation(project(":library:network"))
     implementation(project(":feature:map"))
     implementation(project(":feature:detail"))
+    implementation(project(":core"))
     implementation(project(":MapUtil"))
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")

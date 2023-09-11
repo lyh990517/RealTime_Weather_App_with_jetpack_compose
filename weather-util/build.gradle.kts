@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.rsupport.weather_util"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 24

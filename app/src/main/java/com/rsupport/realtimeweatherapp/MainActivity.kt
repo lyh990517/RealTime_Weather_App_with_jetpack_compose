@@ -26,6 +26,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
+import com.rsupport.detail.viewmodel.DetailViewModel
 import com.rsupport.map.presentation.Route
 import com.rsupport.map.presentation.viewmodel.WeatherViewModel
 import com.rsupport.maputil.convertGRID_GPS
@@ -40,7 +41,8 @@ import java.time.format.DateTimeFormatter
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: WeatherViewModel by viewModels()
+    private val weatherViewModel: WeatherViewModel by viewModels()
+    private val detailViewModel: DetailViewModel by viewModels()
 
     @OptIn(ExperimentalMaterial3Api::class)
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -78,7 +80,8 @@ class MainActivity : ComponentActivity() {
                     }) {
                         WeatherNavHost(
                             navHostController = navController,
-                            weatherViewModel = viewModel
+                            weatherViewModel = weatherViewModel,
+                            detailViewModel = detailViewModel
                         )
                     }
                 }
@@ -131,7 +134,7 @@ class MainActivity : ComponentActivity() {
         val formattedDate = currentDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"))
         val xy = convertGRID_GPS(0, lat, lng)
         lifecycleScope.launch {
-            viewModel.fetchWeather(
+            weatherViewModel.fetchWeather(
                 this@MainActivity,
                 1,
                 10,

@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">detail</string>
+    <string name="weather_type">날씨 유형: %1$s</string>
+    <string name="humidity">습도: %1$s%%</string>
+    <string name="hourly_precipitation">1시간 강수량: %1$smm</string>
+    <string name="temperature">기온: %1$s°C</string>
+    <string name="east_west_wind_component">동서바람성분: %1$sm/s</string>
+    <string name="wind_direction">풍향: %1$s°</string>
+    <string name="north_south_wind_component">남북바람성분: %1$sm/s</string>
+    <string name="wind_speed">풍속: %1$sm/s</string>
 </resources>
