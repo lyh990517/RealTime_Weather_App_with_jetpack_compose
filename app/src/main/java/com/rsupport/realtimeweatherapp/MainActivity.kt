@@ -60,8 +60,8 @@ class MainActivity : ComponentActivity() {
                         BottomNavigation(
                             items = listOf(
                                 BottomNavItem(
-                                    name = Route.HOME,
-                                    route = Route.HOME,
+                                    name = Route.MAP,
+                                    route = Route.MAP,
                                     icon = Icons.Default.Home
                                 ),
                                 BottomNavItem(
@@ -129,7 +129,7 @@ class MainActivity : ComponentActivity() {
 
     private fun fetchMap(lat: Double, lng: Double) {
         val currentDate = LocalDate.now()
-        val oneHourAgo = LocalTime.now().minusHours(1)
+        val oneHourAgo = LocalTime.now().minusMinutes(10)
         val formattedTime = oneHourAgo.format(DateTimeFormatter.ofPattern("HHmm"))
         val formattedDate = currentDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"))
         val xy = convertGRID_GPS(0, lat, lng)

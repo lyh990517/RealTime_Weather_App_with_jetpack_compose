@@ -20,8 +20,8 @@ fun WeatherNavHost(
     detailViewModel: DetailViewModel
 ) {
 
-    NavHost(navController = navHostController, startDestination = Route.HOME) {
-        composable(Route.HOME) {
+    NavHost(navController = navHostController, startDestination = Route.MAP) {
+        composable(Route.MAP) {
             MapScreen(
                 weatherViewModel.uiState.collectAsState(),
                 navHostController
