@@ -133,6 +133,7 @@ class MainActivity : ComponentActivity() {
         val formattedTime = oneHourAgo.format(DateTimeFormatter.ofPattern("HHmm"))
         val formattedDate = currentDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"))
         val xy = convertGRID_GPS(0, lat, lng)
+        Log.e("test","${xy.x.toInt()} ${xy.y.toInt()}")
         lifecycleScope.launch {
             weatherViewModel.fetchWeather(
                 this@MainActivity,

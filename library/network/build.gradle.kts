@@ -12,7 +12,7 @@ android {
     defaultConfig {
         minSdk = 24
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.rsupport.network.TestRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -50,6 +50,14 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
 
+    testImplementation("com.google.dagger:hilt-android-testing:2.44.2")
+    kaptTest("com.google.dagger:hilt-android-compiler:2.44.2")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.44.2")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.44.2")
+
+    androidTestImplementation ("com.android.support.test:rules:1.0.2")
+
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
 }
 
 kapt {
