@@ -40,7 +40,7 @@ object NetworkModule {
     fun provideGson(): Gson {
         return GsonBuilder().setLenient().create()
     }
-//test6
+//test7
     @Provides
     @Singleton
     fun provideRetrofit(
