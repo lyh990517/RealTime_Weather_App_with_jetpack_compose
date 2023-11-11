@@ -20,6 +20,8 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
+        
+
     # 1. 현재 시간 설정하기
     - name: 1. 현재 시간 설정하기
       uses: 1466587594/get-current-time@v1
