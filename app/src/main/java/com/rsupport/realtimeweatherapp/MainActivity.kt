@@ -1,5 +1,6 @@
 package com.rsupport.realtimeweatherapp
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
@@ -114,8 +115,20 @@ class MainActivity : ComponentActivity() {
         val providers: List<String> = locationManager.getProviders(true)
         var location: Location? = null
         for (provider in providers) {
-            val l = locationManager.getLastKnownLocation(provider) ?: continue
-            if (location == null || l.accuracy < location.accuracy) {
+            val l = if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                locationManager.getLastKnownLocation(provider)
+            }else{
+                null
+            }
+                locationManager.getLastKnownLocation(provider) ?: continue
+            if (location == null || l!!.accuracy < location.accuracy) {
                 // 더 정확한 위치 정보를 사용합니다.
                 location = l
             }
