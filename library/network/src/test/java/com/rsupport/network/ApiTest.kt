@@ -54,7 +54,6 @@ class ApiTest {
 
     @After
     fun tearDown() {
-        //test4
         Dispatchers.resetMain()
     }
 
