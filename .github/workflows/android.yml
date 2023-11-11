@@ -20,6 +20,65 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
+    # 1. 현재 시간 설정하기
+    - name: 1. 현재 시간 설정하기
+      uses: 1466587594/get-current-time@v1
+      id: current-time
+      with:
+          format: YYYY.MM.DD_LT
+          utcOffset: "+09:00"
+      if: always()
+
+      # 2. 현재 시간 내용 확인
+    - name: 2. 현재 시간 내용 확인
+      env:
+          TIME: "${{ steps.current-time.outputs.time }}"
+          F_TIME: "${{ steps.current-time.outputs.formattedTime }}"
+      run: echo $TIME $F_TIME
+      if: always()
+
+   # 로깅1. github context
+    - name: 로깅1. GitHub context 확인
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+      if: always()
+
+     # 로깅2. steps context
+    - name: 로깅3. steps context 확인
+      env:
+          STEPS_CONTEXT: ${{ toJson(steps) }}
+      run: echo "$STEPS_CONTEXT"
+      if: always()
+
+      # 로깅3. runner context
+    - name: 로깅4. runner context 확인
+      env:
+        RUNNER_CONTEXT: ${{ toJson(runner) }}
+      run: echo "$RUNNER_CONTEXT"
+      if: always()
+
+      # 로깅4. strategy context
+    - name: 로깅5. strategy context 확인
+      env:
+        STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+      run: echo "$STRATEGY_CONTEXT"
+      if: always()
+
+      # 로깅5. matrix context
+    - name: 로깅6. matrix context 확인
+      env:
+          MATRIX_CONTEXT: ${{ toJson(matrix) }}
+      run: echo "$MATRIX_CONTEXT"
+      if: always()
+
+    # 로깅6. job context
+    - name: 로깅2. job context 확인
+      env:
+          JOB_CONTEXT: ${{ toJson(job) }}
+      run: echo "$JOB_CONTEXT"
+      if: always()
+        
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
