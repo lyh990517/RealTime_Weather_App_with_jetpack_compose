@@ -20,20 +20,9 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-   # 0. gradle 캐싱 
-    - name: Cache Gradle packages
-    - uses: actions/cache@v2
-      with:
-        path: |
-         ~/.gradle/caches
-         ~/.gradle/wrapper
-        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties', '**/buildSrc/**/*.kt') }}
-        restore-keys: |
-          ${{ runner.os }}-gradle-
-
     # 1. 현재 시간 설정하기
     - name: 1. 현재 시간 설정하기
-      uses: 1466587594/get-current-time@v1
+    - uses: 1466587594/get-current-time@v1
       id: current-time
       with:
           format: YYYY.MM.DD_LT
