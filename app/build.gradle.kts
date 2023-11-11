@@ -9,7 +9,9 @@ plugins {
 android {
     namespace = "com.rsupport.realtimeweatherapp"
     compileSdk = 34
-
+    lint {
+        baseline = file("lint-baseline.xml")
+    }
     defaultConfig {
         applicationId = "com.rsupport.realtimeweatherapp"
         minSdk = 24
